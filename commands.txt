@@ -1,0 +1,60 @@
+=> After installing django using pip install django
+
+=> in a specified directory, to create a project folder, type the command
+- django-admin startproject <<name_of_project>>
+
+=> in the project folder directory create your app using,
+ - django-admin startapp <<app_name>>
+
+=> to run the app, go to the project folder directory where
+ there is the manage.py file and run
+- python manage.py runserver
+
+=> to save changes in your models before actually migrating your stuff, ran;
+-python manage.py makemigrations
+
+=> to actually run migrations, run the command;
+- python manange.py migrate
+
+NOTE: Django these days uses the an sqlite database
+
+=>to create a superuser i.e a user that can access the admin panel,
+run ;
+- python manage.py createsuperuser
+
+here super user is admin admin@socialbook.com 123
+
+NOTE: 
+1. To prevent problems during migrations make sure that your app name
+is listed under installed apps.
+
+2. To register your template files or external html file;
+"DIRS": [os.path.join(BASE_DIR, "templates")], under templates.
+
+3. To register your static files add in settings.py;
+STATIC_URL = "static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+
+4. To register a media storage add in settings.py;
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+and urlpatterns = urlpatterns+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 
+in the urls.py file
+
+5. to change the default loading area of your project, in the urls.py of your project add;
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path('', include('core.urls'))
+]
+
+and in the urls.py of your app add;
+urlpatterns = [
+    path('', views.index, name='index')
+]
+
+6. To make sure an added model shows in the admin panel, in the admin.py add;
+admin.site.register(<<Profile>>)
+
+csrf - cross site request fraudery, for malware detection
